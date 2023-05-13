@@ -16,7 +16,7 @@ public class InspectorController {
         this.inspectorService = inspectorService;
     }
 
- //basic CRUD operations for the Inspector entity
+    //basic CRUD operations for the Inspector entity
     @GetMapping("/inspectors")
     @ResponseBody
     public ResponseEntity<List<Inspector>> getInspectors() {
@@ -31,13 +31,13 @@ public class InspectorController {
 
     @PostMapping("/inspectors")
     @ResponseBody
-    public ResponseEntity<Inspector> createInspector(Inspector inspector) {
+    public ResponseEntity<Inspector> createInspector(@RequestBody Inspector inspector) {
         return ResponseEntity.ok(inspectorService.create(inspector));
     }
 
     @PutMapping("/inspectors")
     @ResponseBody
-    public ResponseEntity<Inspector> updateInspector(Inspector inspector) {
+    public ResponseEntity<Inspector> updateInspector(@RequestBody Inspector inspector) {
         return ResponseEntity.ok(inspectorService.update(inspector));
     }
 

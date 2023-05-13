@@ -37,13 +37,13 @@ public class InspectionController {
 
     @PostMapping("/inspections")
     @ResponseBody
-    public ResponseEntity<Inspection> createInspection(Inspection inspection) {
+    public ResponseEntity<Inspection> createInspection(@RequestBody Inspection inspection) {
         return ResponseEntity.ok(inspectionService.create(inspection));
     }
 
     @PutMapping("/inspections")
     @ResponseBody
-    public ResponseEntity<Inspection> updateInspection(Inspection inspection) {
+    public ResponseEntity<Inspection> updateInspection(@RequestBody Inspection inspection) {
         return ResponseEntity.ok(inspectionService.update(inspection));
     }
 

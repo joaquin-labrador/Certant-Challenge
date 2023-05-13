@@ -38,13 +38,13 @@ public class CarController {
 
     @PostMapping("/cars")
     @ResponseBody
-    public ResponseEntity<Car> createCar(Car car) {
+    public ResponseEntity<Car> createCar(@RequestBody Car car) {
         return ResponseEntity.ok(carService.create(car));
     }
 
     @PutMapping("/cars")
     @ResponseBody
-    public ResponseEntity<Car> updateCar(Car car) {
+    public ResponseEntity<Car> updateCar(@RequestBody Car car) {
         return ResponseEntity.ok(carService.update(car));
     }
 
