@@ -3,9 +3,12 @@ package com.example.CertantChallenge.Service;
 import com.example.CertantChallenge.Entities.Inspector;
 import com.example.CertantChallenge.Exceptions.NotFoundException;
 import com.example.CertantChallenge.Repositories.InspectorRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.example.CertantChallenge.Utils.NotUpdateNull.getNullPropertyNames;
 
 @Service
 public class InspectorService {
@@ -24,26 +27,44 @@ public class InspectorService {
     }
 
     public Inspector findById(Long id) {
-        Inspector inspector = inspectorRepository.findById(id).orElse(null);
-        if (inspector == null) {
-            throw new NotFoundException("Inspector with id " + id + " does not exist");
+        try {
+            Inspector inspector = inspectorRepository.findById(id).orElse(null);
+            if (inspector == null) {
+                throw new NotFoundException("Inspector with id " + id + " does not exist");
+            }
+            return inspector;
+        } catch (Exception e) {
+            throw new NotFoundException(e.getMessage());
         }
-        return inspector;
     }
 
     public List<Inspector> findAll() {
-        return inspectorRepository.findAll();
+        try {
+            return inspectorRepository.findAll();
+        } catch (Exception e) {
+            throw new NotFoundException(e.getMessage());
+        }
     }
 
     public Inspector update(Inspector inspector) {
-        if (!inspectorRepository.existsById(inspector.getId())) {
-            throw new RuntimeException("Inspector not found");
+        try {
+            Inspector inspectorToUpdate = findById(inspector.getId());
+            if (inspectorToUpdate == null) {
+                throw new RuntimeException("Inspector not found");
+            }
+            BeanUtils.copyProperties(inspector, inspectorToUpdate, getNullPropertyNames(inspector));
+            return inspectorRepository.save(inspectorToUpdate);
+        } catch (Exception e) {
+            throw new NotFoundException(e.getMessage());
         }
-        return inspectorRepository.save(inspector);
     }
 
     public void delete(Long id) {
-        inspectorRepository.deleteById(id);
+        try {
+            inspectorRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new NotFoundException(e.getMessage());
+        }
     }
 
 
