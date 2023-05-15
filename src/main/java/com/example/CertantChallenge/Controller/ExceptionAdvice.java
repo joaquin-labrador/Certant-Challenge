@@ -28,7 +28,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(InternalServerError.class)
     public ResponseEntity<ApiErrorResponse> handleInternalServerError(InternalServerError ex) {
-        ApiErrorResponse errorResponse = new ApiErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND.value(), LocalDateTime.now());
+        ApiErrorResponse errorResponse = new ApiErrorResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }
